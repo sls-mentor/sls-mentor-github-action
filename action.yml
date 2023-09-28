@@ -32,14 +32,13 @@ runs:
     - name: 'sls-mentor-run'
       id: sls-mentor-run
       run: |
-        echo 'SLS_MENTOR_RESULT<<EOF' >> "$GITHUB_ENV"
+        echo "SLS_MENTOR_RESULT<<EOF" >> "$GITHUB_ENV"
         npx sls-mentor@latest --level ${{inputs.level}} --noFail >> "$GITHUB_ENV"
-        echo EOF >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENV"
       shell: bash
     - uses: actions/github-script@v6
       with:
         script: |
-          console.log(process.env);
           const output = `Sls-mentor result: ${process.env.SLS_MENTOR_RESULT}`;
           await github.rest.issues.createComment({
             owner: context.repo.owner,
