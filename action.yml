@@ -1,27 +1,27 @@
-name: 'Sls mentor '
-description: 'run sls-mentor'
+name: "Sls mentor "
+description: "run sls-mentor"
 inputs:
   level:
-    description: 'Sls-mentor level'
+    description: "Sls-mentor level"
     required: false
-    default: '1'
+    default: "1"
     type: string
   iam-role:
-    description: 'IAM role to assume'
+    description: "IAM role to assume"
     required: true
     type: string
   iam-role-session-name:
-    description: 'IAM role session name'
+    description: "IAM role session name"
     required: false
-    default: 'sls-mentor'
+    default: "sls-mentor"
     type: string
   aws-region:
-    description: 'AWS region'
+    description: "AWS region"
     required: false
-    default: 'eu-west-1'
+    default: "eu-west-1"
     type: string
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -29,14 +29,12 @@ runs:
         role-to-assume: ${{inputs.iam-role}}
         role-session-name: ${{inputs.iam-role-session-name}}
         aws-region: ${{inputs.aws-region}}
-    - name: 'sls-mentor-run'
+    - name: "sls-mentor-run"
       id: sls-mentor-run
       run: |
-        {
-          echo "SLS_MENTOR_RESULT<<EOF" 
-          npx sls-mentor@latest --level ${{inputs.level}} --noFail
-          echo "EOF" 
-        } >> "$GITHUB_ENV"
+        echo "SLS_MENTOR_RESULT<<EOF" >> "$GITHUB_ENV"
+        npx sls-mentor@latest --level ${{inputs.level}} --noFail >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENVV
       shell: bash
     - uses: actions/github-script@v6
       with:
