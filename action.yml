@@ -32,10 +32,7 @@ runs:
     - name: "sls-mentor-run"
       id: sls-mentor-run
       run: |
-        echo "SLS_MENTOR_RESULT<<EOF" >> "$GITHUB_ENV"
-        npx sls-mentor@latest --level ${{inputs.level}} --noFail >> "$GITHUB_ENV"
-        echo "EOF \n" >> "$GITHUB_ENV"
-        echo $GITHUB_ENV
+        echo "SLS_MENTOR_RESULT<<EOF"$'\n'"$(npx sls-mentor@latest --level 1 --noFail)"$'\n'EOF >> "$GITHUB_ENV"
       shell: bash
     - uses: actions/github-script@v6
       with:
