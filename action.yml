@@ -20,6 +20,11 @@ inputs:
     required: false
     default: "eu-west-1"
     type: string
+  sls-mentor-version:
+    description: "Sls-mentor version"
+    required: false
+    default: "latest"
+    type: string
 runs:
   using: "composite"
   steps:
@@ -32,7 +37,7 @@ runs:
     - name: "sls-mentor-run"
       id: sls-mentor-run
       run: |
-        echo "SLS_MENTOR_RESULT<<EOF"$'\n'"$(npx sls-mentor@latest --level 1 --noFail)"$'\n'EOF >> "$GITHUB_ENV"
+        echo "SLS_MENTOR_RESULT<<EOF"$'\n'"$(npx sls-mentor@${{inputs.sls-mentor-version}} --level ${{inputs.sls-mentor-level}} --noFail)"$'\n'EOF >> "$GITHUB_ENV"
       shell: bash
     - uses: actions/github-script@v6
       with:
